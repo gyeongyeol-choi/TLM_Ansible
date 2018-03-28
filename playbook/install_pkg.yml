@@ -1,0 +1,25 @@
+---
+- hosts: tmaxlinux
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version
+
+    #- name: Find my home
+    #  shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
+    #  register: user_home
+
+    #- name: Grep the pakcage name
+    #  shell: "cat /etc/pkgname"
+    #  register: pkg_name
+
+    - name: Install the package on the remote node
+      apt:
+        name: '{{ pkg_name }}'
+        state: present
+        update_cache: yes
+      become: true
+      when: os_version.stdout.find('Ubuntu 16.04') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      #when: ansible_distribution == "Ubuntu" or ansible_distibution == "TmaxLinux"
+      #when: ansible_distribution == "Ubuntu" | ansible_distribution == "TmaxLinux"
+      #with_itmes:

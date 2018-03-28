@@ -15,7 +15,7 @@
 
     - name: Install the package on the remote node
       apt:
-        name: '{{ pkg_name }}'
+        name: '{{ packName }}'
         state: present
         update_cache: yes
       become: true

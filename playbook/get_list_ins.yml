@@ -33,7 +33,7 @@
     - name: Fetch the package list
       fetch:
         src: '{{ user_home.stdout }}/sc_tmp/pkg_list_ins.txt'
-        dest: '/home/tmax/test_dir/{{ inventory_hostname }}/'
+        dest: '{{ ansible_user_dir }}/test_dir/{{ inventory_hostname }}/'
         flat: yes
 
     - name: Delete the package list in remote node

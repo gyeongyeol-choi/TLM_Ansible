@@ -6,7 +6,7 @@ import ansible
 
 
 host_ip = "192.168.27.52"
-pkg_list = []
+#pkg_list = []
 
 p = subprocess.call('ansible-playbook playbook/get_list_ins.yml', shell=True)
 

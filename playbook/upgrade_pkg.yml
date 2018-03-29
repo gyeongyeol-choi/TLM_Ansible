@@ -14,7 +14,7 @@
         name: '{{ packName }}'
         state: latest
         update_cache: yes
-      when: os_version.stdout.find('Ubuntu 16.04') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
       become: true
       #when: ansible_distribution == "Ubuntu" | ansible_distribution == "TmaxLinux"
       #with_itmes:

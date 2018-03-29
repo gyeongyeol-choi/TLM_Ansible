@@ -18,7 +18,7 @@
 
     - name: Construct the package list (To-be Upgrade)
       shell: apt-get upgrade --just-print > '{{ user_home.stdout }}/sc_tmp/pkg_list_upg_pre.txt'
-      when: os_version.stdout.find('Ubuntu 16.04') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1      
+      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1      
       become: true
 
     - name: Push the shell script for parsing

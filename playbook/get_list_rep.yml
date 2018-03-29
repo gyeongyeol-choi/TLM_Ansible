@@ -18,14 +18,14 @@
 
     - name: Verify the package by setting the key
       shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9011567A260F6FE7
-      when: os_version.stdout.find('Ubuntu 16.04') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
       become: true
     
     - name: Construct the package list (in repository)
       #shell: apt list --installed > /test.txt
       #shell: apt list --installed | cut -d '/' -f1 > /test.txt
       shell: apt list | cut -d '/' -f1  | sed '1d' > '{{ user_home.stdout }}/sc_tmp/pkg_list_rep.txt'
-      when: os_version.stdout.find('Ubuntu 16.04') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
       become: true
 
     - name: Fetch the package list

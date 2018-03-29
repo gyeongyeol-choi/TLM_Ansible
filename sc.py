@@ -11,8 +11,6 @@ Usage : python %s [-p play] [-i host_ip]
 * host_ip : ipv4 address of the remote node
 **********************************************************************************************************************""" % (sys.argv[0]))
 
-#play=""
-#pl_path=""
 
 def configuration():
 	global play
@@ -66,11 +64,11 @@ if __name__ == "__main__":
 	p = subprocess.call('ansible-playbook '+pl_path, shell=True)
 
 	if play == 'get_ins':
-		f = open("./list/"+host_ip+"/pkg_list_ins.txt")
+		f = open("/etc/SC_ansible/list/"+host_ip+"/pkg_list_ins.txt")
 	elif play == 'get_rep':
-		f = open("./list/"+host_ip+"/pkg_list_rep.txt")
+		f = open("/etc/SC_ansible/list/"+host_ip+"/pkg_list_rep.txt")
 	elif play == 'get_upg':
-		f = open("./list/"+host_ip+"/pkg_list_upg.txt")
+		f = open("/etc/SC_ansible/list/"+host_ip+"/pkg_list_upg.txt")
 	else:
 		sys.exit()
 

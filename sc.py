@@ -43,9 +43,9 @@ def playbook():
 	elif play == 'get_rep':
 		pl_path = 'playbook/get_list_rep.yml'
 	elif play == 'ins':
-		pl_path = "playbook/install_pkg.yml --extra-value='@../files/install.json'"
+		pl_path = "playbook/install_pkg.yml --extra-vars='@./files/add.json'"
 	elif play == 'del':
-		pl_path = "playbook/delete_pkg.yml --extra-value='@../files/delete.json'"
+		pl_path = "playbook/delete_pkg.yml --extra-vars='@./files/del.json'"
 	else:
 		print ("Error!!: Invalid argument (-p) ...")
 		sys.exit()
@@ -65,6 +65,8 @@ if __name__ == "__main__":
 		f = open("../test_dir/"+host_ip+"/pkg_list_ins.txt")
 	elif play == 'get_rep':
 		f = open("../test_dir/"+host_ip+"/pkg_list_rep.txt")
+	else:
+		sys.exit()
 
 	while 1:
 	        line = f.readline().replace("\n", "")

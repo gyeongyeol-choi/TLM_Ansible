@@ -11,7 +11,7 @@
 
     - name: Delete the package on the remote node
       apt:
-        name: '{{ pkg_name }}'
+        name: '{{ packName }}'
         state: absent
         autoremove: yes
         purge: yes

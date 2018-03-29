@@ -42,10 +42,14 @@ def playbook():
 		pl_path = 'playbook/get_list_ins.yml'
 	elif play == 'get_rep':
 		pl_path = 'playbook/get_list_rep.yml'
+	elif play == 'get_upg':
+		pl_path = 'playbook/get_list_upg.yml'
 	elif play == 'ins':
 		pl_path = "playbook/install_pkg.yml --extra-vars='@./files/add.json'"
 	elif play == 'del':
 		pl_path = "playbook/delete_pkg.yml --extra-vars='@./files/delete.json'"
+	elif play == 'upg':
+		pl_path = "playbook/upgrade_pkg.yml --extra-vars='@./files/upgrade.json'"
 	else:
 		print ("Error!!: Invalid argument (-p) ...")
 		sys.exit()
@@ -62,9 +66,11 @@ if __name__ == "__main__":
 	p = subprocess.call('ansible-playbook '+pl_path, shell=True)
 
 	if play == 'get_ins':
-		f = open("../test_dir/"+host_ip+"/pkg_list_ins.txt")
+		f = open("./list/"+host_ip+"/pkg_list_ins.txt")
 	elif play == 'get_rep':
-		f = open("../test_dir/"+host_ip+"/pkg_list_rep.txt")
+		f = open("./list/"+host_ip+"/pkg_list_rep.txt")
+	elif play == 'get_upg':
+		f = open("./list/"+host_ip+"/pkg_list_upg.txt")
 	else:
 		sys.exit()
 
@@ -72,7 +78,10 @@ if __name__ == "__main__":
 	        line = f.readline().replace("\n", "")
 	        if not line: break
 
-	        pkg_list.append(line)
+		if play == 'get_upg':
+			pkg_list.extend(line.split())
+		else:
+	        	pkg_list.append(line)
 
 	dic = {"nodeID": host_ip, "packName": pkg_list}
 

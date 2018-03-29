@@ -11,7 +11,7 @@
 
     - name: Upgrade the package on the remote node
       apt:
-        name: '{{ pkg_name }}'
+        name: '{{ packName }}'
         state: latest
         update_cache: yes
       when: os_version.stdout.find('Ubuntu 16.04') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1

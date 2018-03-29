@@ -64,11 +64,11 @@ if __name__ == "__main__":
 	p = subprocess.call('ansible-playbook '+pl_path, shell=True)
 
 	if play == 'get_ins':
-		f = open("/etc/SC_ansible/list/"+host_ip+"/pkg_list_ins.txt")
+		f = open("/home/po7/SC_PKG_LIST/"+host_ip+"/pkg_list_ins.txt")
 	elif play == 'get_rep':
-		f = open("/etc/SC_ansible/list/"+host_ip+"/pkg_list_rep.txt")
+		f = open("/home/po7/SC_PKG_LIST/"+host_ip+"/pkg_list_rep.txt")
 	elif play == 'get_upg':
-		f = open("/etc/SC_ansible/list/"+host_ip+"/pkg_list_upg.txt")
+		f = open("/home/po7/SC_PKG_LIST/"+host_ip+"/pkg_list_upg.txt")
 	else:
 		sys.exit()
 

@@ -45,7 +45,7 @@ def playbook():
 	elif play == 'ins':
 		pl_path = "playbook/install_pkg.yml --extra-vars='@./files/add.json'"
 	elif play == 'del':
-		pl_path = "playbook/delete_pkg.yml --extra-vars='@./files/del.json'"
+		pl_path = "playbook/delete_pkg.yml --extra-vars='@./files/delete.json'"
 	else:
 		print ("Error!!: Invalid argument (-p) ...")
 		sys.exit()

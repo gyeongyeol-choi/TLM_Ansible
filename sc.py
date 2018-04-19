@@ -73,7 +73,7 @@ if __name__ == "__main__":
 		sys.exit()
 
 	while 1:
-	        line = f.readline().replace("\n", "")
+	        line = f.readline().rstrip('\n')
 	        if not line: break
 
 		if play == 'get_upg':

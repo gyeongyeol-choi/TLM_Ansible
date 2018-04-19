@@ -1,7 +1,12 @@
 {
     "nodeID": "192.168.27.52", 
     "packName": [
+        "build-essential",
+        "389-ds",
         "nginx", 
-        "rolldice" 
+        "rolldice",
+        "apt-doc",
+	"a11y-profile-manager",
+	"a2ps"
     ]
 }

@@ -1,0 +1,42 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version
+
+    - name: Find my home
+      shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
+      register: user_home
+
+    - name: Make the temp directory
+      file:
+        path: '{{ user_home.stdout }}/sc_tmp'
+        state: directory
+        mode: 0755
+
+    - name: Verify the package by setting the key
+      shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9011567A260F6FE7
+      #when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      become: true
+    
+    - name: Construct the package list (in repository)
+      #shell: apt list --installed > /test.txt
+      #shell: apt list --installed | cut -d '/' -f1 > /test.txt
+      shell: apt list | cut -d '/' -f1  | sed '1d' > '{{ user_home.stdout }}/sc_tmp/pkg_list_rep.txt'
+      #when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      become: true
+
+    - name: Fetch the package list
+      fetch:
+        src: '{{ user_home.stdout }}/sc_tmp/pkg_list_rep.txt'
+        dest: '/home/po7/SC_PKG_LIST/{{ inventory_hostname }}/'
+        flat: yes
+
+    - name: Delete the package list in remote node
+      #command: "rm -rf /test.txt"
+      file:
+        dest: '{{ user_home.stdout }}/sc_tmp/pkg_list_rep.txt'
+        state: absent
+      become: true

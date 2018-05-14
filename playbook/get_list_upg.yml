@@ -28,7 +28,7 @@
         mode: 0755
 
     - name: Perform the shell script
-      shell: "{{ user_home.stdout }}/sc_tmp/parsing.sh | sed '1d' > {{ user_home.stdout }}/sc_tmp/pkg_list_upg.txt"
+      shell: "{{ user_home.stdout }}/sc_tmp/parsing.sh > {{ user_home.stdout }}/sc_tmp/pkg_list_upg.txt"
       args:
         chdir: '{{ user_home.stdout }}/sc_tmp/'
       become: true

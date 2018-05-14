@@ -1,12 +1,10 @@
 {
-    "nodeID": "192.168.27.52", 
+    "nodeID": [
+        "192.168.9.80", 
+        "192.168.9.82"
+    ],
     "packName": [
-        "build-essential",
-        "389-ds",
         "nginx", 
-        "rolldice",
-        "apt-doc",
-	"a11y-profile-manager",
-	"a2ps"
+        "rolldice" 
     ]
 }

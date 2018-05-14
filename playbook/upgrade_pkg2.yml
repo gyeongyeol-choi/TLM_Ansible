@@ -1,0 +1,57 @@
+---
+- hosts: tmaxlinux
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version
+
+    - name: Find my home
+      shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
+      register: user_home
+
+    - name: Make the temp directory
+      file:
+        path: '{{ user_home.stdout }}/sc_tmp'
+        state: directory
+        mode: 0755
+
+    - name: Copy the package list (to be upgraded)
+      copy:
+        src: '/home/po7/SC_PKG_LIST/{{ inventory_hostname }}/upgrade.json'
+        dest: '{{ user_home.stdout }}/sc_tmp/upgrade.json'
+
+    - name: Register package variable
+      shell: "cat {{ user_home.stdout }}/sc_tmp/upgrade.json"
+      register: packName
+
+#    - name: Debug packName
+#      debug:
+#        msg: "{{ item }}"
+#      with_items: "{{ test.stdout.split('\n') }}"
+
+#      register: test_parse
+
+#    - name: Debug packName
+#      debug:
+#        msg: "{{ test.stdout | to_json }}"
+#      register: test_parse
+
+#    - name: Debug packName
+#      debug:
+#        msg: "{{ test_parse.packName }}"
+
+
+    #- name: Grep the pakcage name
+    #  shell: "cat /etc/pkgname"
+    #  register: pkg_name
+
+    - name: Upgrade the package on the remote node
+      apt:
+        name: "{{ packName.stdout.split('\n') }}"
+        state: present
+        update_cache: yes
+      become: true
+      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
+      #when: ansible_distribution == "Ubuntu" or ansible_distibution == "TmaxLinux"
+      #when: ansible_distribution == "Ubuntu" | ansible_distribution == "TmaxLinux"
+      #with_itmes:

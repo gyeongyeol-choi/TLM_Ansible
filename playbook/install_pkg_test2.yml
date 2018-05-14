@@ -1,5 +1,5 @@
 ---
-- hosts: '{{ host[0].nodeID }}'
+- hosts: '{{ nodeID }}'
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"
@@ -15,28 +15,11 @@
 
     - name: Install the package on the remote node
       apt:
-        name: '{{ host[0].packName }}'
+        name: '{{ packName }}'
         state: present
         update_cache: yes
-      register: apt_rtn
       become: true
       when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
       #when: ansible_distribution == "Ubuntu" or ansible_distibution == "TmaxLinux"
       #when: ansible_distribution == "Ubuntu" | ansible_distribution == "TmaxLinux"
       #with_itmes:
-
-    - name: Debug the message
-      debug:
-        msg: "{{ apt_rtn }}"
-
-    - name: Debug the message
-      debug:
-        msg: "{{ inventory_hostname }}"
-
-    - name: Debug the message
-      debug:
-        msg: "{{ item }}"
-      with_items:
-        - 0
-        - 1
-

@@ -1,0 +1,7 @@
+---
+############################################################
+# common_vars.yml use common variable for every script
+############################################################
+
+## Initial value
+PATH_SC_PKG_LIST: /home/po7/SC_PKG_LIST

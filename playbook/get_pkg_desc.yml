@@ -36,7 +36,7 @@
     - name: Fetch the package details
       fetch:
         src: '{{ user_home.stdout }}/sc_tmp/nginx.txt'
-        dest: '{{ PATH_SC_PKG_LIST }}/{{ inventory_hostname }}/'        
+        dest: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/'
         flat: yes
 
     - name: Delete the package list in remote node

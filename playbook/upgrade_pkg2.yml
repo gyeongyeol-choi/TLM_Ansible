@@ -17,7 +17,7 @@
 
     - name: Copy the package list (to be upgraded)
       copy:
-        src: '{{ PATH_SC_PKG_LIST }}/{{ inventory_hostname }}/upgrade.json'
+        src: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/upgrade.json'
         dest: '{{ user_home.stdout }}/sc_tmp/upgrade.json'
 
     - name: Register package variable

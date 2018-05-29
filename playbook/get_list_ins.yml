@@ -35,7 +35,7 @@
     - name: Fetch the package list
       fetch:
         src: '{{ user_home.stdout }}/sc_tmp/pkg_list_ins.txt'
-        dest: '{{ PATH_SC_PKG_LIST }}/{{ inventory_hostname }}/'
+        dest: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/'
         flat: yes
 
     - name: Delete the package list in remote node

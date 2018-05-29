@@ -1,6 +1,8 @@
 ---
 - hosts: tmaxlinux
   #gather_facts: no
+  vars_files:
+    - "../vars/common_vars.yml"
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"
@@ -23,12 +25,12 @@
 
     - name: Push the shell script for parsing
       copy:
-        src: ../files/parsing.sh
+        src: ../files/parsing_upg.sh
         dest: '{{ user_home.stdout }}/sc_tmp/'
         mode: 0755
 
     - name: Perform the shell script
-      shell: "{{ user_home.stdout }}/sc_tmp/parsing.sh > {{ user_home.stdout }}/sc_tmp/pkg_list_upg.txt"
+      shell: "{{ user_home.stdout }}/sc_tmp/parsing_upg.sh > {{ user_home.stdout }}/sc_tmp/pkg_list_upg.txt"
       args:
         chdir: '{{ user_home.stdout }}/sc_tmp/'
       become: true

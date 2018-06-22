@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version

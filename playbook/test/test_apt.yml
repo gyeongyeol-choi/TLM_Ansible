@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: List the package
+      shell: "apt list"

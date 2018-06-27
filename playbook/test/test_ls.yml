@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+
+    - name: Find my home
+      shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
+      register: user_home
+
+    - name: List the file in the home directory
+      shell: "ls {{ user_home.stdout }}"

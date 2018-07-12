@@ -1,5 +1,17 @@
 ---
 - hosts: all
   tasks:
+    - name: Find my home
+      shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
+      register: user_home
+
     - name: List the package
-      shell: "apt list"
+      shell: apt list --installed | cut -d '/' -f1  | sed '1d'
+      register: pkg_list_ins
+
+    - name: JSON Parsing
+      shell: 'echo "{\"dto\": {\"type\": \"TEST\", \"result\": \"{{pkg_list_ins.stdout}}\"}}" > {{ user_home.stdout }}/sample.json'
+      become: true
+
+    - name: Service call
+      shell: 'curl -H "Content-Type: application/json" --data @{{ user_home.stdout }}/sample.json http://192.168.9.73:8080/TmaxLinuxMaster/TmaxLinuxMaster/Result?action=RecieveTest > {{user_home.stdout}}/svc.out'

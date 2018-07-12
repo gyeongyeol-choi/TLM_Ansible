@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../vars/common_vars.yml"
   tasks:
     - name: List the disk usage
       shell: "df -Th"

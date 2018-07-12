@@ -1,13 +1,11 @@
 ---
-- hosts: tmaxlinux
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../vars/common_vars.yml"
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"
       register: os_version
-
-    #- name: Grep the pakcage name
-    #  shell: "cat /etc/pkgname"
-    #  register: pkg_name
 
     - name: Upgrade the package on the remote node
       apt:
@@ -16,5 +14,3 @@
         update_cache: yes
       when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1
       become: true
-      #when: ansible_distribution == "Ubuntu" | ansible_distribution == "TmaxLinux"
-      #with_itmes:

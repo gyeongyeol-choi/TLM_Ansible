@@ -1,6 +1,5 @@
 ---
-- hosts: tmaxlinux
-  #gather_facts: no
+- hosts: '{{ GROUP_NAME }}'
   vars_files:
     - "../vars/common_vars.yml"
   tasks:
@@ -42,7 +41,6 @@
       flat: yes
 
     - name: Delete the package list in remote node
-      #command: "rm -rf /test.txt"
       file:
         dest: '{{ user_home.stdout }}/sc_tmp/pkg_list_upg.txt'
         state: absent

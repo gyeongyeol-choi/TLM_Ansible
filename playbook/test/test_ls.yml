@@ -1,7 +1,8 @@
 ---
-- hosts: all
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../vars/common_vars.yml"
   tasks:
-
     - name: Find my home
       shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
       register: user_home

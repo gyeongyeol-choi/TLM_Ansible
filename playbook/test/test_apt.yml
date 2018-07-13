@@ -12,7 +12,7 @@
       register: pkg_list_ins
 
     - name: JSON Parsing
-      shell: 'echo "{\"dto\": {\"type\": \"TEST\", \"result\": \"{{pkg_list_ins.stdout}}\"}}" > {{ user_home.stdout }}/sample.json'
+      shell: 'echo "{\"dto\": {\"type\": \"TEST\", \"result\": \"{{pkg_list_ins.stdout}}\"}}" | tr "\n" " " > {{ user_home.stdout }}/sample.json'
       become: true
 
     - name: Service call

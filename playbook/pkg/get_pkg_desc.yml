@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ GROUP_NAME }}'
   vars_files:
-    - "../vars/common_vars.yml"
+    - "../../vars/common_vars.yml"
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"
@@ -18,19 +18,26 @@
         mode: 0755
 
     - name: Construct the package list (Installed)
-      shell: apt list --installed | cut -d '/' -f1  | sed '1d' > '{{ user_home.stdout }}/sc_tmp/pkg_list_ins.txt'
-      register: pkg_list_ins
+      shell: apt list --installed | cut -d '/' -f1  | sed '1d' | tee '{{ user_home.stdout }}/sc_tmp/pkg_list_ins.txt'
+      register: pkg_name
       when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1      
       become: true
 
-    - name: Fetch the package list
+    - name: Debug message
+      debug:
+        msg: "{{ pkg_name.stdout.split('\n')[0] }}"
+
+    - name: Generate the package description
+      shell: apt show nginx > '{{ user_home.stdout }}/sc_tmp/nginx.txt'
+    
+    - name: Fetch the package details
       fetch:
-        src: '{{ user_home.stdout }}/sc_tmp/pkg_list_ins.txt'
+        src: '{{ user_home.stdout }}/sc_tmp/nginx.txt'
         dest: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/'
         flat: yes
 
     - name: Delete the package list in remote node
       file:
-        dest: '{{ user_home.stdout }}/sc_tmp/pkg_list_ins.txt'
+        dest: '{{ user_home.stdout }}/sc_tmp/nginx.txt'
         state: absent
       become: true

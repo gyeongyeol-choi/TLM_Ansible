@@ -1,0 +1,20 @@
+---
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../../vars/common_vars.yml"
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version
+
+    - name: Find my home
+      shell: "grep '{{ ansible_user }}:' /etc/passwd | awk -F: '{ print $6 }' | head -1"
+      register: user_home
+
+    - name: Change password
+      shell: /home/tmax/auto_password.exp
+
+    - name: Delete the password script
+      file:
+        dest: /home/tmax/auto_password.exp
+        state: absent

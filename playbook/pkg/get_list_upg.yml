@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ GROUP_NAME }}'
   vars_files:
-    - "../vars/common_vars.yml"
+    - "../../vars/common_vars.yml"
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"

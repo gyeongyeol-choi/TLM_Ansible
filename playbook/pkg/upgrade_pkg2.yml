@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ GROUP_NAME }}'
   vars_files:
-    - "../vars/common_vars.yml"
+    - "../../vars/common_vars.yml"
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"
@@ -17,21 +17,19 @@
         state: directory
         mode: 0755
 
-    - name: Copy the package list (to be removed)
+    - name: Copy the package list (to be upgraded)
       copy:
-        src: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/delete.json'
-        dest: '{{ user_home.stdout }}/sc_tmp/delete.json'
+        src: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/upgrade.json'
+        dest: '{{ user_home.stdout }}/sc_tmp/upgrade.json'
 
     - name: Register package variable
-      shell: "cat {{ user_home.stdout }}/sc_tmp/delete.json"
+      shell: "cat {{ user_home.stdout }}/sc_tmp/upgrade.json"
       register: packName
 
-    - name: Delete the package on the remote node
+    - name: Upgrade the package on the remote node
       apt:
         name: "{{ packName.stdout.split('\n') }}"
-        state: absent
-        autoremove: yes
-        purge: yes
+        state: present
         update_cache: yes
       become: true
       when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1

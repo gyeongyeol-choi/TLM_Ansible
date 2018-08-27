@@ -1,7 +1,7 @@
 ---
 - hosts: '{{ GROUP_NAME }}'
   vars_files:
-    - "../vars/common_vars.yml"
+    - "../../vars/common_vars.yml"
   tasks:
     - name: Find OS version
       shell: "cat /etc/issue.net"
@@ -17,16 +17,16 @@
         state: directory
         mode: 0755
 
-    - name: Copy the package list (to be upgraded)
+    - name: Copy the package list (to be installed)
       copy:
-        src: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/upgrade.json'
-        dest: '{{ user_home.stdout }}/sc_tmp/upgrade.json'
+        src: '{{ PATH_SC_PKG_LIST }}/{{ GROUP_NAME }}/{{ inventory_hostname }}/add.json'
+        dest: '{{ user_home.stdout }}/sc_tmp/add.json'
 
     - name: Register package variable
-      shell: "cat {{ user_home.stdout }}/sc_tmp/upgrade.json"
+      shell: "cat {{ user_home.stdout }}/sc_tmp/add.json"
       register: packName
 
-    - name: Upgrade the package on the remote node
+    - name: Install the package on the remote node
       apt:
         name: "{{ packName.stdout.split('\n') }}"
         state: present

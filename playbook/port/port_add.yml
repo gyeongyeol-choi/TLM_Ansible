@@ -1,0 +1,26 @@
+---
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../../vars/common_vars.yml"
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version
+
+    - name: Add the SSH Port
+      shell: echo 'Port {{add_port}}' >> /etc/ssh/sshd_config
+      become: true
+
+    - name: Restart SSH Daemon
+      shell: service sshd restart
+      become: true
+
+    - name: Check the UFW status
+      shell: ufw status verbose
+      register: ufw_status
+      become: true
+
+    - name: Allow the Port (Ubuntu Firewall)
+      shell: ufw allow '{{ add_port }}'
+      when: ufw_status.stdout.find('inactive') == -1
+      become: true

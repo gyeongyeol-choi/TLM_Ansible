@@ -1,0 +1,7 @@
+---
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../../vars/common_vars.yml"
+  tasks:
+    - name: Delay the task (20 sec)
+      shell: "sleep 20"

@@ -11,9 +11,9 @@
       shell: apt list --installed | cut -d '/' -f1  | sed '1d'
       register: pkg_list_ins
 
-    - name: Debug message
-      debug:
-        msg: "_|_{{ pkg_list_ins.stdout }}_|_"
+#    - name: Debug message
+#      debug:
+#        msg: "_|_{{ pkg_list_ins.stdout }}_|_"
 
 #    - name: JSON Parsing
 #      shell: 'echo "{\"dto\": {\"type\": \"TEST\", \"result\": \"{{pkg_list_ins.stdout}}\"}}" | tr "\n" " " > {{ user_home.stdout }}/sample.json'

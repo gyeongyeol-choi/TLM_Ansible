@@ -1,0 +1,16 @@
+---
+- hosts: '{{ GROUP_NAME }}'
+  vars_files:
+    - "../../vars/common_vars.yml"
+  tasks:
+    - name: Find OS version
+      shell: "cat /etc/issue.net"
+      register: os_version
+
+    - name: Delete ruby on the remote node
+      apt:
+        name: ruby
+        state: absent
+        update_cache: yes
+      become: true
+      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1

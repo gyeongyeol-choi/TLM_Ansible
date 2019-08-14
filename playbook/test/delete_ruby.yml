@@ -13,4 +13,3 @@
         state: absent
         update_cache: yes
       become: true
-      when: os_version.stdout.find('Ubuntu 17.10') != -1 or os_version.stdout.find('TmaxLinux 4.0') != -1

@@ -1,0 +1,21 @@
+---
+- hosts: all
+  tasks:
+
+  - name : download jeus
+    get_url: 
+      url: http://172.21.6.2:5666/tmax_program/jeus8001_unix_generic_ko.bin 
+      dest: /tmp/jeus8001_unix_generic_ko.bin
+      mode: 0440
+  
+  - name : download jeus properties
+    get_url: 
+      url: http://172.21.6.2:5666/tmax_program/jeus_install.properties
+      dest: /tmp/jeus_install.properties
+      mode: 0440
+
+  - name : chmod
+    command: chmod 755 /tmp/jeus8001_unix_generic_ko.bin
+
+  - name : Install webtob
+    command: /tmp/jeus8001_unix_generic_ko.bin -f /tmp/jeus_install.properties 

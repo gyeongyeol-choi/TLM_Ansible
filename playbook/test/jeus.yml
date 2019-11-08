@@ -17,5 +17,5 @@
   - name : chmod
     command: chmod 755 /tmp/jeus8001_unix_generic_ko.bin
 
-  - name : Install webtob
+  - name : Install jeus
     command: /tmp/jeus8001_unix_generic_ko.bin -f /tmp/jeus_install.properties 

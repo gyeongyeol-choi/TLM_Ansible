@@ -2,55 +2,20 @@
 - hosts: all
   tasks:
 
-  - name : download java
-    get_url: 
-      url: http://172.21.6.2:5666/tmax_program/server.tar.gz 
-      dest: /tmp/server.tar.gz
-      mode: 0440
-      #  - name: Create a directory if it does not exist
-      #    file:
-      #      path: /tmp/server
-      #      state: directory
-      #      mode: '0755'
-  - name : unarchive
-    unarchive:
-      src: /tmp/server.tar.gz
-      dest: /tmp/
-
-  - name : copy java
-    copy:
-      src: /tmp/server/java-8-oracle
-      dest: /usr/lib/jvm/java-8-oracle
-
   - name : download webtob
     get_url: 
       url: http://172.21.6.2:5666/tmax_program/WEBTOB5_0_SP0_Fix2_LinuxK2_6_x64.bin 
       dest: /tmp/WEBTOB5_0_SP0_Fix2_LinuxK2_6_x64.bin
       mode: 0440
+  
+  - name : download webtob.properties
+    get_url: 
+      url: http://172.21.6.2:5666/tmax_program/webtob.properties
+      dest: /tmp/webtob.properties
+      mode: 0440
 
-#  - name : Install webtob
-#    script: /tmp/WEBTOB5_0_SP0_Fix2_LinuxK2_6_x64.bin -i silence
+  - name : chmod
+    command: chmod 755 /tmp/WEBTOB5_0_SP0_Fix2_LinuxK2_6_x64.bin
 
-          #  - name: command test
-          #    command: "mkdir commandtest"
-          #    command: "cp tibero6-bin-FS07_CS_1902-linux64-166256-opt.tar.gz commandtest/."
-
-    #  - name: tar tibero
-    #    command: "tar -zxvf tibero6-bin-FS07_CS_1902-linux64-166256-opt.tar.gz"
-    #    args:
-    #      chdir: /root/commandtest
-
-      #  - name: export environment variable
-      #command: "export TB_HOME=/home/tibero/Tibero/tibero6"
-      #command: "export TB_SID=tibero"
-      #command: "export LD_LIBRARY_PATH=$TB_HOME/lib:$TB_HOME/client/lib"
-      #command: "export PATH=$PATH:$TB_HOME/bin:$TB_HOME/client/bin"
-
-          #  - name: cp license.xml 
-    #command: "cp licnese.xml $TB_HOME/license/license.xml"
-    #    command: "cp license.xml /root/test/license.xml"
-    #
-    #  - name: gen_tip script
-    #    shell: "/root/tibero6/config/gen_tip.sh"
-    #    args:  
-    #      chdir: /root/tibero6/config
+  - name : Install webtob
+    command: /tmp/WEBTOB5_0_SP0_Fix2_LinuxK2_6_x64.bin -f /tmp/webtob.properties 

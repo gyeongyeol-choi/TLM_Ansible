@@ -1,0 +1,72 @@
+---
+- hosts: all
+  vars_files:
+    - "tibero_vars.yml"
+  tasks:
+          #  - name: command test
+          #    command: "mkdir commandtest"
+      #    command: "cp tibero6-bin-FS07_CS_1902-linux64-166256-opt.tar.gz commandtest/."
+  - name : download tibero
+    get_url:
+      url: http://172.21.6.2:5666/tmax_program/tibero6-bin-FS07_CS_1902-linux64-170287-opt-20190918144814.tar.gz
+      dest: /tmp/tibero6-bin-FS07_CS_1902-linux64-170287-opt-20190918144814.tar.gz
+      mode: 0440
+
+  - name: make tbhome
+    file:
+            #      path: "{{TB_HOME}}"
+      path: /root/test/tiberotest
+      state: directory
+      mode: '0755'
+
+  - name: tar tibero
+    command: "tar -zxvf /tmp/tibero6-bin-FS07_CS_1902-linux64-170287-opt-20190918144814.tar.gz"
+    args:
+#      chdir: "{{TB_HOME}}"
+      chdir: /root/test/tiberotest
+  
+  - name: Adding the path in the bashrc files
+    lineinfile:
+      dest: /root/.bashrc
+      line: "export TB_HOME={{TB_HOME}}"
+      insertafter: 'EOF'
+      regexp: "export TB_HOME={{TB_HOME}}"
+      state: present
+
+  - name: Adding the path in the bashrc files
+    lineinfile:
+      dest: /root/.bashrc
+      line: 'export TB_SID=tibero'
+      insertafter: 'EOF'
+      regexp: 'export TB_SID=tibero'
+      state: present
+
+
+  - name: Adding the path in the bashrc files
+    lineinfile:
+      dest: /root/.bashrc
+      line: 'export LD_LIBRARY_PATH=$TB_HOME/lib:$TB_HOME/client/lib'
+      insertafter: 'EOF'
+      state: present
+
+  - name: export environment variable
+    lineinfile:
+      dest: /root/.bashrc
+      line: 'export PATH=$PATH:$TB_HOME/bin:$TB_HOME/client/bin'
+      insertafter: 'EOF'
+      state: present
+
+          #  - name: cp license.xml 
+    #command: "cp licnese.xml $TB_HOME/license/license.xml"
+    #    command: "cp license.xml /root/test/license.xml"
+
+  - name: Source the bashrc file
+    shell: source /root/.bashrc
+    args:
+      executable: /bin/bash
+
+  - name: gen_tip script
+    shell: "{{TB_HOME}}/config/gen_tip.sh"
+    args:  
+      executable: /bin/bash
+      chdir: "{{TB_HOME}}/config"

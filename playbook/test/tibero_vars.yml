@@ -1,0 +1,6 @@
+---
+## tibero vars
+TB_HOME: /root/tibero6
+TB_SID: tibero
+LD_LIBRARY_PATH: /root/tibero6/lib:/root/tibero6/client/lib
+PATH: $PATH:/root/tibero6/bin:/root/tibero6/client/bin

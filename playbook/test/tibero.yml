@@ -12,16 +12,16 @@
       dest: /tmp/tibero6-bin-FS07_CS_1902-linux64-170287-opt-20190918144814.tar.gz
       mode: 0440
 
-  - name: make tbhome
-    file:
-      path: "{{TB_HOME}}"
-      state: directory
-      mode: '0755'
+      #  - naime: make tbhome
+      #    file:
+      #      path: "{{TB_HOME}}"
+      #      state: directory
+      #      mode: '0755'
 
   - name: tar tibero
     command: "tar -zxvf /tmp/tibero6-bin-FS07_CS_1902-linux64-170287-opt-20190918144814.tar.gz"
     args:
-      chdir: "{{TB_HOME}}"
+      chdir: /root
   
   - name: Adding the path in the bashrc files
     lineinfile:

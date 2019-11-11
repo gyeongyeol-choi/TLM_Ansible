@@ -72,7 +72,7 @@
   - name : download tibero license
     get_url:
       url: http://172.21.6.2:5666/tmax_program/license.xml
-      dest: "{{TB_HOME}}/licence/license.xml"
+      dest: "{{TB_HOME}}/license/license.xml"
       mode: 0440
 
 

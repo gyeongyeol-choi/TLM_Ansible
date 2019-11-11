@@ -68,3 +68,16 @@
     args:  
       executable: /bin/bash
       chdir: "{{TB_HOME}}/config"
+
+  - name : download tibero license
+    get_url:
+      url: http://172.21.6.2:5666/tmax_program/licence.xml
+      dest: "{{TB_HOME}}/licence/licence.xml"
+      mode: 0440
+
+
+  - name: gen_tip script
+    shell: tbboot NOMOUNT
+    args:  
+      executable: /bin/bash
+

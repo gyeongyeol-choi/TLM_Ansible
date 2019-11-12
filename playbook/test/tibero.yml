@@ -76,8 +76,19 @@
       mode: 0440
 
 
-  - name: gen_tip script
+  - name: tbboot NOMOUNT
     shell: tbboot NOMOUNT
+    args:  
+      executable: /bin/bash
+
+  - name : download tibero license
+    get_url:
+      url: http://172.21.6.2:5666/tmax_program/tibero.sql
+      dest: /tmp/tibero.sql
+      mode: 0440
+
+  - name: tbsql tibero.sql
+    shell: tbsql sys/tibero < /tmp/tibero.sql
     args:  
       executable: /bin/bash
 

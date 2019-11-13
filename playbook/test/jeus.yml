@@ -10,7 +10,7 @@
   
   - name : download jeus input file
     get_url: 
-      url: http://172.21.6.2:5666/tmax_program/jeus_install.properties
+      url: http://172.21.6.2:5666/tmax_program/jeus8.input
       dest: /tmp/jeus8.input
       mode: 0440
 
